@@ -36,3 +36,23 @@ export const deleteStudentById = async (req, res) => {
     res.status(500).json({ message: "Internal Server Error" });
   }
 };
+export const editStudentById = async (req, res) => {
+  try {
+    const { name, email } = req.body;
+    const studentID = req.params.id;
+    const updatedStudent = await Student.findByIdAndUpdate(
+      studentID,
+      { name, email },
+      { new: true }
+    );
+    if (!updatedStudent) {
+      return res.status(404).json({ message: "Student not found" });
+    }
+    res
+      .status(200)
+      .json({ message: "student update success", data: updatedStudent });
+  } catch (error) {
+    console.error("Error fetching student details:", error);
+    res.status(500).json({ message: "Internal Server Error" });
+  }
+};
