@@ -12,3 +12,13 @@ export const addStudent = async (req, res) => {
     res.status(500).json({ message: "student register fail" });
   }
 };
+
+export const getStudent = async (req, res) => {
+  try {
+    const student = await Student.find();
+    res.status(200).json({ data: student });
+  } catch (error) {
+    console.error("Error fetching student details:", error);
+    res.status(500).json({ message: "Internal Server Error" });
+  }
+};
